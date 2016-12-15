@@ -12,9 +12,10 @@ passport.use(new FacebookStrategy({
         callbackURL: 'http://104.215.157.180/users/auth/facebook/callback'
     },
     function(accessToken, refreshToken, profile, done) {
+        console.log('############### PASSPORT CALLBACK ######################');
         console.log(`accessToken: ${accessToken}`);
         console.log(`refreshToken: ${refreshToken}`);
-        console.log(`profile: ${profile}`);
+        console.log(`profile: ${JSON.stringify(profile, null, 2)}`);
         done(null, 'kaodim');
     }
 ));
