@@ -30,7 +30,7 @@ router.get('/auth/facebook', passport.authenticate('facebook'));
 
 router.get('/auth/facebook/callback',
     passport.authenticate('facebook', {
-        successRedirect: '/',
+        successRedirect: '/users/login/success',
         failureRedirect: '/users/login/fail',
         session: false
     })
@@ -46,7 +46,7 @@ router.all('/auth/facebook/deauthorize', (req, res) => {
     console.log(`PARAMS: ${JSON.stringify(req.params, null, 2)}`);
     console.log(`BODY: ${JSON.stringify(req.body, null, 2)}`);
     console.log('==========================');
-    res.send('ok');
+    res.send('deauthorized');
 });
 
 
@@ -77,7 +77,7 @@ passport.use(new GoogleStrategy({
         callbackURL: 'http://siang.southeastasia.cloudapp.azure.com/users/auth/google/callback'
     },
     function(accessToken, refreshToken, profile, done) {
-        console.log('############### FACEBOOK CALLBACK ######################');
+        console.log('############### GOOGLE CALLBACK ######################');
         console.log(`accessToken: ${accessToken}`);
         console.log(`refreshToken: ${refreshToken}`);
         console.log(`profile: ${JSON.stringify(profile, null, 2)}`);
@@ -91,11 +91,12 @@ router.get('/auth/google', passport.authenticate('google', {
 
 router.get('/auth/google/callback',
     passport.authenticate('google', {
+        successRedirect: '/users/login/success',
         failureRedirect: '/users/login/fail',
         session: false
     }),
     (req, res) => {
-        res.redirect('/');
+        res.redirect('/users/login/success2');
     }
 );
 
@@ -123,11 +124,18 @@ router.get('/login/fail', (req, res) => {
     console.log(`PARAMS: ${JSON.stringify(req.params, null, 2)}`);
     console.log(`BODY: ${JSON.stringify(req.body, null, 2)}`);
     console.log('==========================');
-    res.send('ok');
+    res.send('fail');
 });
 
-router.get('/', (req, res) => {
-    res.send('respond with a resource');
+router.get('/login/success', (req, res) => {
+    console.log('====== LOGIN SUCCESS! ====');
+    console.log(`HEADERS: ${JSON.stringify(req.headers, null, 2)}`);
+    console.log(`QUERY: ${JSON.stringify(req.query, null, 2)}`);
+    console.log(`COOKIES: ${JSON.stringify(req.cookies, null, 2)}`);
+    console.log(`PARAMS: ${JSON.stringify(req.params, null, 2)}`);
+    console.log(`BODY: ${JSON.stringify(req.body, null, 2)}`);
+    console.log('==========================');
+    res.send('success');
 });
 
 module.exports = router;
