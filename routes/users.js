@@ -31,12 +31,12 @@ router.get('/auth/facebook', passport.authenticate('facebook'));
 router.get('/auth/facebook/callback',
     passport.authenticate('facebook', {
         successRedirect: '/',
-        failureRedirect: '/login',
+        failureRedirect: '/users/login',
         session: false
     })
 );
 
-router.all('/auth/facebook/deauthorize', (req) => {
+router.all('/auth/facebook/deauthorize', (req, res) => {
     // return signed_request in POST method
     // 'signed_request': 'Jr5homy...1ODAifQ'
     console.log('======DEAUTHORIZED!=======');
@@ -46,6 +46,7 @@ router.all('/auth/facebook/deauthorize', (req) => {
     console.log(`PARAMS: ${JSON.stringify(req.params, null, 2)}`);
     console.log(`BODY: ${JSON.stringify(req.body, null, 2)}`);
     console.log('==========================');
+    res.send('ok');
 });
 
 
@@ -90,7 +91,7 @@ router.get('/auth/google', passport.authenticate('google', {
 
 router.get('/auth/google/callback',
     passport.authenticate('google', {
-        failureRedirect: '/login',
+        failureRedirect: '/users/login',
         session: false
     }),
     (req, res) => {
@@ -112,6 +113,17 @@ router.post('/login', (req, res) => {
     res.render('login', {
         title: 'POST!'
     });
+});
+
+router.get('/login/fail', (req, res) => {
+    console.log('====== LOGIN FAIL! =======');
+    console.log(`HEADERS: ${JSON.stringify(req.headers, null, 2)}`);
+    console.log(`QUERY: ${JSON.stringify(req.query, null, 2)}`);
+    console.log(`COOKIES: ${JSON.stringify(req.cookies, null, 2)}`);
+    console.log(`PARAMS: ${JSON.stringify(req.params, null, 2)}`);
+    console.log(`BODY: ${JSON.stringify(req.body, null, 2)}`);
+    console.log('==========================');
+    res.send('ok');
 });
 
 router.get('/', (req, res) => {
