@@ -26,13 +26,14 @@ passport.use(new FacebookStrategy({
     }
 ));
 
-router.get('/auth/facebook', passport.authenticate('facebook'));
+router.get('/auth/facebook', passport.authenticate('facebook', {
+    session: false
+}));
 
 router.get('/auth/facebook/callback',
     passport.authenticate('facebook', {
         successRedirect: '/users/login/success',
-        failureRedirect: '/users/login/fail',
-        session: false
+        failureRedirect: '/users/login/fail'
     })
 );
 
@@ -86,14 +87,15 @@ passport.use(new GoogleStrategy({
 ));
 
 router.get('/auth/google', passport.authenticate('google', {
+    session: false,
     scope: ['https://www.googleapis.com/auth/plus.login']
 }));
 
+/* why login fail ar? must use session???? */
 router.get('/auth/google/callback',
     passport.authenticate('google', {
         successRedirect: '/users/login/success',
-        failureRedirect: '/users/login/fail',
-        session: false
+        failureRedirect: '/users/login/fail'
     }),
     (req, res) => {
         res.redirect('/users/login/success2');
