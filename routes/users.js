@@ -23,12 +23,7 @@ passport.use(new FacebookStrategy({
 
 router.get('/auth/facebook', passport.authenticate('facebook'));
 
-router.get('/auth/facebook/callback', (req, res) => {
-    console.log(`req.query: ${JSON.stringify(req.query, null, 2)}`);
-    res.redirect(`/users/auth/facebok/callback2?code=${req.query.code}`);
-});
-
-router.get('/auth/facebook/callback2',
+router.get('/auth/facebook/callback',
     passport.authenticate('facebook', {
         successRedirect: '/',
         failureRedirect: '/login',
