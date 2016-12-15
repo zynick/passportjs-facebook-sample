@@ -6,6 +6,11 @@ const FacebookStrategy = require('passport-facebook').Strategy;
 const router = express.Router();
 
 
+/**
+ * Facebook
+ */
+
+// https://developers.facebook.com/apps/1732701200392899/fb-login/
 passport.use(new FacebookStrategy({
         clientID: '1732701200392899',
         clientSecret: '566be9e0783e9415aa9030476882c278',
@@ -20,7 +25,6 @@ passport.use(new FacebookStrategy({
     }
 ));
 
-
 router.get('/auth/facebook', passport.authenticate('facebook'));
 
 router.get('/auth/facebook/callback',
@@ -31,7 +35,9 @@ router.get('/auth/facebook/callback',
     })
 );
 
-router.get('/auth/facebook/deauthorize', (req, res) => {
+router.all('/auth/facebook/deauthorize', (req, res) => {
+    // return signed_request in POST method
+    // "signed_request": "Jr5homy...1ODAifQ"
     console.log('======DEAUTHORIZED!=======');
     console.log(`HEADERS: ${JSON.stringify(req.headers, null, 2)}`);
     console.log(`QUERY: ${JSON.stringify(req.query, null, 2)}`);
@@ -40,6 +46,15 @@ router.get('/auth/facebook/deauthorize', (req, res) => {
     console.log(`BODY: ${JSON.stringify(req.body, null, 2)}`);
     console.log('==========================');
 });
+
+
+
+
+
+
+
+
+
 
 router.get('/login', (req, res) => {
     res.render('login', {
