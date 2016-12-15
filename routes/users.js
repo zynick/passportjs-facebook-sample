@@ -73,7 +73,7 @@ router.all('/auth/facebook/deauthorize', (req) => {
 passport.use(new GoogleStrategy({
         clientID: '849910655721-hg83c3gt7gq2vmdr76kdpd4rnpkr5rvm.apps.googleusercontent.com',
         clientSecret: 'fG-oFUh7AbRSLWDB5SjVvbii',
-        callbackURL: 'http://104.215.157.180/users/auth/google/callback'
+        callbackURL: 'http://siang.southeastasia.cloudapp.azure.com/users/auth/google/callback'
     },
     function(accessToken, refreshToken, profile, done) {
         console.log('############### FACEBOOK CALLBACK ######################');
